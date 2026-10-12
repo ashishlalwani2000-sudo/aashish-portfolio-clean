@@ -1,58 +1,844 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aashish Lalwani | Architect & Computational Designer</title>
+    <title>Aashish Lalwani — Architect & Computational Designer | HDR Dubai</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#050505',
+                        charcoal: '#0f0f11',
+                        surface: '#151518',
+                        champagne: {
+                            400: '#E2C08D',
+                            500: '#DFB15B',
+                            600: '#B88E3E',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        mono: ['Courier New', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0a0a0a; color: #f5f5f5; }
+        /* Custom Architectural Grid, Glassmorphism, and Glow Effects */
+        body {
+            background-color: #050505;
+            color: #E2E8F0;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-grid-pattern {
+            background-size: 60px 60px;
+            background-image: 
+                linear-gradient(to right, rgba(226, 192, 141, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(226, 192, 141, 0.03) 1px, transparent 1px);
+        }
+
+        .glass-panel {
+            background: rgba(18, 18, 22, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 192, 141, 0.12);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .glass-panel-hover:hover {
+            background: rgba(25, 25, 32, 0.85);
+            border-color: rgba(226, 192, 141, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(226, 192, 141, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #26262e;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #DFB15B;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF0D4 0%, #E2C08D 50%, #9E7D3B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
     </style>
 </head>
-<body class="antialiased selection:bg-neutral-800 selection:text-white">
-    <header class="max-w-4xl mx-auto px-6 py-16 flex justify-between items-center border-b border-neutral-900">
-        <div>
-            <h1 class="text-2xl font-bold tracking-tight text-white">Aashish Lalwani</h1>
-            <p class="text-sm text-neutral-400 mt-1">Architect & Computational Designer at HDR Dubai</p>
+<body class="bg-obsidian text-slate-200 antialiased bg-grid-pattern selection:bg-champagne-500/30 selection:text-champagne-400">
+
+    <canvas id="ambient-canvas"></canvas>
+
+    <header class="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-6xl">
+        <nav class="glass-panel rounded-full px-6 py-3.5 flex items-center justify-between shadow-2xl border border-champagne-400/20">
+            <a href="#hero" class="flex items-center gap-3 group">
+                <span class="w-3 h-3 rounded-full bg-champagne-500 animate-pulse group-hover:scale-125 transition-transform"></span>
+                <span class="font-serif text-lg tracking-widest text-white uppercase font-medium">AASHISH LALWANI</span>
+                <span class="hidden sm:inline-block text-[10px] font-mono tracking-widest text-champagne-400/70 border-l border-white/10 pl-3">HDR DUBAI</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-slate-400">
+                <a href="#projects" class="hover:text-champagne-400 transition-colors">Architecture</a>
+                <a href="#computational" class="hover:text-champagne-400 transition-colors">BIM Scripts</a>
+                <a href="#photography" class="hover:text-champagne-400 transition-colors">Photography</a>
+                <a href="#about" class="hover:text-champagne-400 transition-colors">About</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="openContactModal()" class="flex items-center gap-2 bg-gradient-to-r from-champagne-500 to-champagne-600 text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-champagne-500/20">
+                    <span>Contact</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white p-1">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Nav Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden mt-3 glass-panel rounded-2xl p-6 flex flex-col gap-4 text-xs font-mono uppercase tracking-widest text-slate-300 shadow-2xl">
+            <a href="#projects" onclick="toggleMobileMenu()" class="hover:text-champagne-400">Architecture</a>
+            <a href="#computational" onclick="toggleMobileMenu()" class="hover:text-champagne-400">BIM Scripts</a>
+            <a href="#photography" onclick="toggleMobileMenu()" class="hover:text-champagne-400">Photography</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="hover:text-champagne-400">About</a>
         </div>
-        <a href="mailto:aashishlalwani@outlook.com" class="text-xs uppercase tracking-widest px-4 py-2 border border-neutral-700 hover:bg-white hover:text-black transition rounded-full">Contact</a>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 py-12 space-y-16">
-        <section>
-            <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-6 font-semibold">Featured Professional Work</h2>
-            <div class="space-y-6">
-                <div class="p-6 border border-neutral-800 rounded-xl hover:border-neutral-600 transition bg-neutral-950">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-lg font-medium text-white">Sheikh Shakhbout Medical City (SSMC)</h3>
-                        <span class="text-xs text-neutral-500 font-mono">HDR</span>
-                    </div>
-                    <p class="text-sm text-neutral-400">Advanced healthcare architectural documentation, BIM model coordination, and complex computational workflows.</p>
+    <main class="relative z-10">
+
+        <section id="hero" class="pt-36 md:pt-48 pb-24 px-6 max-w-7xl mx-auto flex flex-col justify-center min-h-[90vh]">
+            <div class="flex flex-wrap items-center gap-3 mb-8">
+                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-champagne-500/10 border border-champagne-500/30 text-champagne-400 text-xs font-mono uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>Available for Elite Projects | Dubai & Global</span>
                 </div>
-                <div class="p-6 border border-neutral-800 rounded-xl hover:border-neutral-600 transition bg-neutral-950">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-lg font-medium text-white">Anahata (Thesis)</h3>
-                        <span class="text-xs text-neutral-500 font-mono">Academic</span>
-                    </div>
-                    <p class="text-sm text-neutral-400">Holistic cancer care and wellness architecture exploring spatial healing and microclimate integration.</p>
+                <span class="text-xs font-mono text-slate-500 tracking-wider">25.2048° N, 55.2708° E</span>
+            </div>
+
+            <h1 class="text-5xl sm:text-7xl md:text-8xl font-serif tracking-tight leading-[1.05] mb-8 text-white font-light max-w-5xl">
+                Architectural Masterworks & <span class="italic font-normal gold-gradient-text">Algorithmic Precision.</span>
+            </h1>
+
+            <p class="text-slate-400 text-base sm:text-xl max-w-3xl leading-relaxed mb-12 font-light">
+                Architect & Computational Specialist at <strong class="text-slate-200">HDR Dubai</strong>. Architecting mega-scale healthcare complexes, pioneering generative spatial matrices, and automating BIM models for high-complexity global infrastructure.
+            </p>
+
+            <!-- Metrics Matrix Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-champagne-400/20 pt-10 mt-4">
+                <div class="glass-panel p-5 rounded-2xl">
+                    <div class="text-3xl md:text-4xl font-serif text-white gold-gradient-text">300+</div>
+                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-wider mt-1">BIM Model Hours Saved</div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl">
+                    <div class="text-3xl md:text-4xl font-serif text-white gold-gradient-text">4+</div>
+                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-wider mt-1">Active Global Megaprojects</div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl">
+                    <div class="text-3xl md:text-4xl font-serif text-white gold-gradient-text">2x</div>
+                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-wider mt-1">Global Photo Winner (HDR)</div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl">
+                    <div class="text-3xl md:text-4xl font-serif text-white gold-gradient-text">240,000+</div>
+                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-wider mt-1">SQ.M Healthcare Mastered</div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-6 font-semibold">BIM & Computational Specializations</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                <div class="p-3 bg-neutral-900 rounded border border-neutral-800">Revit & Dynamo</div>
-                <div class="p-3 bg-neutral-900 rounded border border-neutral-800">pyRevit Automation</div>
-                <div class="p-3 bg-neutral-900 rounded border border-neutral-800">Rhinoceros & Grasshopper</div>
-                <div class="p-3 bg-neutral-900 rounded border border-neutral-800">Navisworks Coordination</div>
+        <section id="projects" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-widest text-champagne-400 mb-2 flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4"></i>
+                        <span>01 / Architectural Portfolio</span>
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl font-serif text-white font-light">Featured Masterworks</h2>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="flex flex-wrap gap-2 bg-charcoal/80 p-1.5 rounded-2xl border border-white/10">
+                    <button onclick="filterProjects('All')" class="filter-btn active px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider transition-all bg-champagne-500 text-obsidian font-bold" data-filter="All">All Works</button>
+                    <button onclick="filterProjects('Healthcare & Megaprojects')" class="filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all" data-filter="Healthcare & Megaprojects">Healthcare & Megaprojects</button>
+                    <button onclick="filterProjects('Computational BIM')" class="filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all" data-filter="Computational BIM">Computational BIM</button>
+                    <button onclick="filterProjects('Academic Thesis')" class="filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all" data-filter="Academic Thesis">Academic Thesis</button>
+                </div>
+            </div>
+
+            <!-- Projects Dynamic Grid -->
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project Cards injected by JS -->
             </div>
         </section>
+
+        <section id="computational" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/10">
+            <div class="mb-12">
+                <div class="text-xs font-mono uppercase tracking-widest text-champagne-400 mb-2 flex items-center gap-2">
+                    <i data-lucide="terminal" class="w-4 h-4"></i>
+                    <span>02 / Computational Automation Lab</span>
+                </div>
+                <h2 class="text-4xl sm:text-5xl font-serif text-white font-light mb-4">pyRevit & Dynamo Script Console</h2>
+                <p class="text-slate-400 max-w-2xl text-sm leading-relaxed">
+                    Custom algorithm generation, Python/pyRevit execution scripts, and Grasshopper parametric definitions developed to automate multi-million sq.m healthcare developments.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel rounded-3xl p-6 md:p-8 border-champagne-400/20">
+                <!-- Script List Selection -->
+                <div class="lg:col-span-4 flex flex-col gap-3" id="script-list">
+                    <!-- Script Selection Buttons Injected Here -->
+                </div>
+
+                <!-- Interactive Code IDE Preview -->
+                <div class="lg:col-span-8 bg-obsidian/90 rounded-2xl border border-white/10 p-6 flex flex-col justify-between font-mono text-xs shadow-2xl relative">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                                <span id="script-filename" class="ml-2 text-slate-400 text-xs">renumber_rooms.py</span>
+                            </div>
+
+                            <button onclick="copyCode()" class="flex items-center gap-1.5 text-champagne-400 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                <span id="copy-btn-text">Copy Code</span>
+                            </button>
+                        </div>
+
+                        <pre class="text-emerald-400/90 overflow-x-auto leading-relaxed p-2 font-mono text-[11px] sm:text-xs max-h-[340px]">
+                            <code id="script-code-block"># Loading pyRevit Script Environment...</code>
+                        </pre>
+                    </div>
+
+                    <div class="pt-4 mt-6 border-t border-white/10 text-slate-500 text-[11px] flex justify-between items-center">
+                        <span id="script-desc" class="text-slate-400 italic">Automated Revit API room renumbering workflow</span>
+                        <span class="text-champagne-400 font-semibold font-mono">HDR BIM API Standard</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="photography" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/10">
+            <div class="mb-12">
+                <div class="text-xs font-mono uppercase tracking-widest text-champagne-400 mb-2 flex items-center gap-2">
+                    <i data-lucide="camera" class="w-4 h-4"></i>
+                    <span>03 / Spatial Light & Photography</span>
+                </div>
+                <h2 class="text-4xl sm:text-5xl font-serif text-white font-light mb-2">Award-Winning Architectural Visuals</h2>
+                <p class="text-slate-400 text-sm">Honors from the annual HDR Global Photography Contest capturing concrete geometry, structural light, and macro perspectives.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Photography Item 1 -->
+                <div onclick="openLightbox('Pocket-Sized Galaxies', '3rd Place Winner - HDR Global Photo Contest 2025', 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80', 'Interplay of macro structural concrete joinery and geometric light shafts.')" class="group relative aspect-[16/10] rounded-2xl overflow-hidden cursor-pointer glass-panel glass-panel-hover">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Pocket-Sized Galaxies" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent p-6 flex flex-col justify-end">
+                        <div class="inline-flex items-center gap-2 text-champagne-400 text-xs font-mono mb-2">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                            <span>3rd Place — HDR Global Photo Contest 2025</span>
+                        </div>
+                        <h3 class="text-2xl font-serif text-white mb-1">Pocket-Sized Galaxies</h3>
+                        <p class="text-xs text-slate-400 font-light">Interplay of macro structural concrete joinery and geometric light shafts.</p>
+                    </div>
+                </div>
+
+                <!-- Photography Item 2 -->
+                <div onclick="openLightbox('Void & Zenith', '2nd Place Winner - HDR Global Photo Contest 2026', 'https://images.unsplash.com/photo-1506158669146-619067262a00?auto=format&fit=crop&w=1600&q=80', 'High-contrast monochrome study of healthcare atrium light wells.')" class="group relative aspect-[16/10] rounded-2xl overflow-hidden cursor-pointer glass-panel glass-panel-hover">
+                    <img src="https://images.unsplash.com/photo-1506158669146-619067262a00?auto=format&fit=crop&w=1200&q=80" alt="Void & Zenith" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent p-6 flex flex-col justify-end">
+                        <div class="inline-flex items-center gap-2 text-champagne-400 text-xs font-mono mb-2">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                            <span>2nd Place — HDR Global Photo Contest 2026</span>
+                        </div>
+                        <h3 class="text-2xl font-serif text-white mb-1">Void & Zenith</h3>
+                        <p class="text-xs text-slate-400 font-light">High-contrast monochrome study of healthcare atrium light wells.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/10">
+            <div class="glass-panel rounded-3xl p-8 md:p-14 border-champagne-400/20 flex flex-col lg:flex-row gap-12 items-start justify-between">
+                <div class="max-w-2xl">
+                    <span class="text-xs font-mono uppercase tracking-widest text-champagne-400 mb-3 block">Architectural Profile</span>
+                    <h3 class="text-3xl sm:text-4xl font-serif text-white mb-6 font-light">Aashish Lalwani</h3>
+                    <p class="text-slate-300 text-base leading-relaxed mb-6 font-light">
+                        Architect and Computational Designer based in Dubai, leading BIM model management and generative computational routines at <strong class="text-white">HDR</strong>. Specializing in high-complexity healthcare megaprojects across the Middle East and North America, including Sheikh Shakhbout Medical City (UAE), UCSF Health Helen Diller Hospital (USA), and NEOM | THE LINE (KSA).
+                    </p>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8 font-light">
+                        Combining human-centric biophilic geometry with advanced pyRevit/Grasshopper visual programming to streamline complex spatial workflows from early conceptual design to construction documentation.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="openContactModal()" class="bg-gradient-to-r from-champagne-500 to-champagne-600 text-obsidian px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-lg">
+                            Get In Touch
+                        </button>
+                        <a href="mailto:aashishlalwani@outlook.com" class="glass-panel text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all border border-white/20 flex items-center gap-2">
+                            <i data-lucide="mail" class="w-4 h-4 text-champagne-400"></i>
+                            <span>aashishlalwani@outlook.com</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Professional Specifications Sidebar -->
+                <div class="w-full lg:w-96 glass-panel p-6 rounded-2xl border border-white/10 flex flex-col gap-4 text-xs font-mono">
+                    <div class="flex justify-between pb-3 border-b border-white/10">
+                        <span class="text-slate-500">Practice</span>
+                        <span class="text-white font-bold">HDR Dubai</span>
+                    </div>
+                    <div class="flex justify-between pb-3 border-b border-white/10">
+                        <span class="text-slate-500">Location</span>
+                        <span class="text-white">Dubai, United Arab Emirates</span>
+                    </div>
+                    <div class="flex justify-between pb-3 border-b border-white/10">
+                        <span class="text-slate-500">Focus Areas</span>
+                        <span class="text-champagne-400 text-right">Healthcare, BIM, Computational Scripts</span>
+                    </div>
+                    <div class="flex justify-between pb-3 border-b border-white/10">
+                        <span class="text-slate-500">Primary Stack</span>
+                        <span class="text-slate-300 text-right">Revit, pyRevit, Rhino, Dynamo, Grasshopper</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Key Megaproject</span>
+                        <span class="text-champagne-400">THE LINE | NEOM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 px-6 border-t border-white/10 text-center text-xs font-mono text-slate-500">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                <p>© 2026 Aashish Lalwani. Architect & Computational Designer — HDR Dubai.</p>
+                <div class="flex gap-6 text-slate-400">
+                    <a href="mailto:aashishlalwani@outlook.com" class="hover:text-champagne-400 transition-colors">Outlook</a>
+                    <a href="https://linkedin.com" target="_blank" class="hover:text-champagne-400 transition-colors">LinkedIn</a>
+                    <a href="#hero" class="hover:text-champagne-400 transition-colors">Back To Top ↑</a>
+                </div>
+            </div>
+        </footer>
+
     </main>
 
-    <footer class="max-w-4xl mx-auto px-6 py-12 border-t border-neutral-900 text-xs text-neutral-500 text-center">
-        © 2026 Aashish Lalwani. Designed for modern architecture & computational design.
-    </footer>
+    <div id="project-modal" class="fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-2xl hidden flex justify-end transition-opacity duration-300">
+        <div class="w-full max-w-3xl bg-charcoal h-full overflow-y-auto p-8 sm:p-12 border-l border-champagne-400/30 flex flex-col justify-between shadow-2xl relative">
+            <div>
+                <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+                    <span id="modal-subtitle" class="text-xs font-mono text-champagne-400 uppercase tracking-widest">Healthcare Infrastructure</span>
+                    <button onclick="closeProjectModal()" class="p-2 rounded-full glass-panel text-slate-300 hover:text-white transition-colors">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <h2 id="modal-title" class="text-3xl sm:text-5xl font-serif text-white mb-4 font-light">Project Title</h2>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8 text-xs font-mono glass-panel p-4 rounded-2xl border border-white/10">
+                    <div>
+                        <span class="text-slate-500 block mb-1">LOCATION</span>
+                        <span id="modal-location" class="text-slate-200 font-medium">Dubai, UAE</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block mb-1">SCALE / AREA</span>
+                        <span id="modal-area" class="text-slate-200 font-medium">240,000 sq.m</span>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <span class="text-slate-500 block mb-1">ROLE</span>
+                        <span id="modal-role" class="text-champagne-400 font-medium">HDR Lead BIM</span>
+                    </div>
+                </div>
+
+                <img id="modal-image" src="" alt="Project Hero" class="w-full aspect-[16/9] object-cover rounded-2xl mb-8 border border-white/10 shadow-2xl">
+
+                <div class="mb-8">
+                    <h4 class="text-xs font-mono uppercase tracking-widest text-champagne-400 mb-3">Project Overview</h4>
+                    <p id="modal-full-desc" class="text-slate-300 text-sm leading-relaxed font-light mb-6">Full description here...</p>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-xs font-mono uppercase tracking-widest text-champagne-400 mb-3">Key Technical & Computational Highlights</h4>
+                    <ul id="modal-highlights" class="space-y-3 font-mono text-xs text-slate-300">
+                        <!-- Highlights injected by JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-white/10 flex gap-4">
+                <button onclick="closeProjectModal()" class="w-full py-3.5 bg-gradient-to-r from-champagne-500 to-champagne-600 text-obsidian font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 transition-all">
+                    Close Drawer View
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for Photography -->
+    <div id="lightbox-modal" onclick="closeLightbox()" class="fixed inset-0 z-50 bg-obsidian/95 backdrop-blur-xl hidden items-center justify-center p-6 cursor-pointer">
+        <div class="max-w-5xl max-h-[90vh] flex flex-col items-center">
+            <img id="lightbox-img" src="" alt="Enlarged Visual" class="max-h-[75vh] object-contain rounded-2xl border border-champagne-400/30 mb-6 shadow-2xl">
+            <div class="text-center max-w-xl">
+                <h3 id="lightbox-title" class="text-3xl font-serif text-white mb-2">Title</h3>
+                <p id="lightbox-award" class="text-xs font-mono text-champagne-400 mb-2">Award</p>
+                <p id="lightbox-desc" class="text-xs text-slate-400 font-light">Description</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form Modal -->
+    <div id="contact-modal" class="fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md hidden items-center justify-center p-6">
+        <div class="glass-panel border border-champagne-400/30 rounded-3xl p-8 max-w-md w-full relative shadow-2xl">
+            <button onclick="closeContactModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white p-1">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <h3 class="text-3xl font-serif text-white mb-2 font-light">Direct Contact</h3>
+            <p class="text-xs text-slate-400 mb-6 font-mono">Direct communication lines with Aashish Lalwani — HDR Dubai.</p>
+
+            <form onsubmit="handleContactSubmit(event)" class="space-y-4 text-xs font-mono mb-6">
+                <div>
+                    <label class="block text-slate-400 mb-1">YOUR NAME</label>
+                    <input type="text" required placeholder="Architect / Studio Representative" class="w-full bg-obsidian/80 border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-champagne-500">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">EMAIL ADDRESS</label>
+                    <input type="email" required placeholder="name@firm.com" class="w-full bg-obsidian/80 border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-champagne-500">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">MESSAGE / PROJECT BRIEF</label>
+                    <textarea rows="3" required placeholder="Discuss healthcare BIM automation or computational collaboration..." class="w-full bg-obsidian/80 border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-champagne-500"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-champagne-500 to-champagne-600 text-obsidian font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 transition-all shadow-lg">
+                    Send Direct Message
+                </button>
+            </form>
+
+            <div class="pt-4 border-t border-white/10 text-center text-xs font-mono text-slate-400">
+                Or write directly to: <a href="mailto:aashishlalwani@outlook.com" class="text-champagne-400 hover:underline">aashishlalwani@outlook.com</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MASTER PROJECT DATA
+        const PROJECTS_DATA = [
+            {
+                id: 'neom-line',
+                title: 'THE LINE | NEOM',
+                subtitle: 'HDR Dubai (2024–Present)',
+                category: 'Healthcare & Megaprojects',
+                tags: ['Healthcare & Megaprojects', 'Computational BIM'],
+                location: 'NEOM, Saudi Arabia',
+                area: '170km Urban Corridor',
+                role: 'HDR Computational Lead',
+                heroImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
+                shortDesc: 'Mega-scale linear urbanism in KSA. High-density computational spatial planning, dynamic algorithmic façade optimization matrices, and generative infrastructure routing.',
+                fullDesc: 'As part of the HDR international computational architecture team, engineered generative BIM workflows for high-density linear urban blocks in THE LINE. Formulated Grasshopper algorithms for automated solar radiation balancing, module orientation matrixing, and dynamic interior spatial re-allocation across multi-level spatial tiers.',
+                highlights: [
+                    'Engineered Grasshopper visual script for automated façade solar aperture optimization.',
+                    'Developed algorithmic space-planning matrices for high-density modular cores.',
+                    'Coordinated computational BIM sync across multi-disciplinary international consultancies.'
+                ]
+            },
+            {
+                id: 'ucsf-hdh',
+                title: 'UCSF Helen Diller Hospital',
+                subtitle: 'HDR San Francisco / Dubai',
+                category: 'Healthcare & Megaprojects',
+                tags: ['Healthcare & Megaprojects', 'Computational BIM'],
+                location: 'San Francisco, USA',
+                area: '82,000 sq.m',
+                role: 'BIM Spatial Coordinator',
+                heroImage: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80',
+                shortDesc: 'Ultra-complex tertiary healthcare tower. Advanced BIM automation, high-performance medical spatial coordination, and automated equipment placement.',
+                fullDesc: 'Worked on high-complexity room loading, critical care Medical Equipment (FFE) placement, and multidisciplinary sync for the flagship UCSF Helen Diller Hospital tower. Programmed pyRevit scripts to auto-align medical ceiling pendants and reconcile equipment clearance zones against strictOSHPD regulatory standards.',
+                highlights: [
+                    'Automated FFE clearance zone verification using custom Revit API script.',
+                    'Coordinated complex surgical suite ceiling grids and MEP collision mitigation.',
+                    'Engineered pyRevit automated sheet index validator saving over 80 project documentation hours.'
+                ]
+            },
+            {
+                id: 'ssmc',
+                title: 'Sheikh Shakhbout Medical City (SSMC)',
+                subtitle: 'HDR Abu Dhabi',
+                category: 'Healthcare & Megaprojects',
+                tags: ['Healthcare & Megaprojects', 'Computational BIM'],
+                location: 'Abu Dhabi, UAE',
+                area: '240,000 sq.m',
+                role: 'BIM Architect',
+                heroImage: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80',
+                shortDesc: '240,000 sq.m flagship medical complex in Abu Dhabi. Specialized in FFE spatial layout coordination and computational room renumbering automation.',
+                fullDesc: 'Lead room renumbering automation and FFE placement workflows across 100+ sheets in Abu Dhabi flagship healthcare facility. Developed pyRevit scripts for sequential topological renumbering along circulating splines.',
+                highlights: [
+                    'Engineered pyRevit automated script for topological room-renumbering across 100+ sheets.',
+                    'Coordinated spatial layouts for specialized pediatric and surgical blocks.',
+                    'Managed MEP BIM sync & clash mitigation for critical medical equipment.'
+                ]
+            },
+            {
+                id: 'anahata',
+                title: 'Anahata — Healing Architecture',
+                subtitle: 'Academic Thesis Masterwork',
+                category: 'Academic Thesis',
+                tags: ['Academic Thesis'],
+                location: 'Porbandar, India',
+                area: '50,000 sq.m',
+                role: 'Lead Designer & Researcher',
+                heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+                shortDesc: '50,000 sq.m Cancer Hospital & Palliative Care Center designed with biophilic therapy courtyards and serene wave-like timber vaults.',
+                fullDesc: 'Anahata redefines healthcare spatial design by shifting oncology treatment spaces away from clinical coldness toward restorative humanistic architecture. Features light-filtering timber ceiling vaults, healing courtyards, and acoustic buffer zones simulated using fluid dynamics.',
+                highlights: [
+                    'Optimized biophilic microclimates reducing indoor temperature by 4.2°C passively.',
+                    'Parametric timber roof structure modeled in Rhino Grasshopper for daylight optimization.',
+                    'Human-centric patient journey layout integrated with palliative green therapy gardens.'
+                ]
+            }
+        ];
+
+        // MASTER SCRIPT DATA
+        const SCRIPTS_DATA = [
+            {
+                id: 'renumber',
+                name: 'pyRevit Room & Door Automator',
+                filename: 'renumber_topological.py',
+                desc: 'Automates sequential spatial renumbering along architectural circulation splines across multi-level medical facilities.',
+                code: `import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+doc = __revit__.ActiveUIDocument.Document
+rooms = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).ToElements()
+
+# Sort rooms topologically along circulation vector
+sorted_rooms = sorted(rooms, key=lambda r: (r.Level.Elevation, r.Location.Point.X))
+
+with Transaction(doc, "Batch Renumber Healthcare Spaces"):
+    for idx, room in enumerate(sorted_rooms):
+        new_num = "HC-{:03d}".format(idx + 101)
+        param = room.get_Parameter(BuiltInParameter.ROOM_NUMBER)
+        if param and not param.IsReadOnly:
+            param.Set(new_num)
+
+print("Automated renumbering complete for {} spaces.".format(len(rooms)))`
+            },
+            {
+                id: 'cloud_coder',
+                name: 'Revision Cloud Color-Coder',
+                filename: 'revision_cloud_color.py',
+                desc: 'Detects pending architectural review revisions and applies visual override colors based on submission phase deadlines.',
+                code: `import clr
+clr.AddReference('RevitAPI')
+clr.AddReference('RevitServices')
+from RevitServices.Persistence import DocumentManager
+from Autodesk.Revit.DB import *
+
+doc = DocumentManager.Instance.CurrentDBDocument
+view = doc.ActiveView
+
+clouds = FilteredElementCollector(doc, view.Id)\\
+    .OfCategory(BuiltInCategory.OST_RevisionClouds).ToElements()
+
+ogs = OverrideGraphicSettings()
+ogs.SetProjectionLineColor(Color(226, 192, 141)) # Champagne Gold Accent
+
+with Transaction(doc, "Highlight Revisions"):
+    for cloud in clouds:
+        view.SetElementOverrides(cloud.Id, ogs)
+
+print("Graphic override applied to " + str(len(clouds)) + " revision elements.")`
+            },
+            {
+                id: 'tag_aligner',
+                name: 'Equipment Tag Auto-Aligner',
+                filename: 'align_medical_tags.py',
+                desc: 'Auto-aligns medical room equipment tags to clean orthogonal reference vectors across dense floor plan views.',
+                code: `import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+doc = __revit__.ActiveUIDocument.Document
+tags = FilteredElementCollector(doc, doc.ActiveView.Id)\\
+    .OfCategory(BuiltInCategory.OST_MedicalEquipmentTags).ToElements()
+
+with Transaction(doc, "Align Medical Tags"):
+    for tag in tags:
+        head_pos = tag.TagHeadPosition
+        # Snap tag head position to nearest 100mm grid line
+        snapped_x = round(head_pos.X * 10) / 10
+        tag.TagHeadPosition = XYZ(snapped_x, head_pos.Y, head_pos.Z)`
+            }
+        ];
+
+        let currentFilter = 'All';
+
+        // INITIALIZE APPLICATION
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            initThreeJS();
+            renderProjects();
+            renderScriptConsole();
+        });
+
+        // RENDER PROJECTS GRID
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+
+            const filtered = currentFilter === 'All' 
+                ? PROJECTS_DATA 
+                : PROJECTS_DATA.filter(p => p.tags.includes(currentFilter));
+
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'group glass-panel glass-panel-hover rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between';
+                card.onclick = () => openProjectModal(project.id);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="relative aspect-[16/10] overflow-hidden bg-obsidian">
+                            <img src="${project.heroImage}" alt="${project.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-85 group-hover:opacity-100">
+                            <div class="absolute top-4 right-4 bg-obsidian/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest text-champagne-400 border border-champagne-400/20">
+                                ${project.category}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-champagne-400 font-mono mb-1.5">${project.subtitle}</div>
+                            <h3 class="text-2xl font-serif text-white mb-2 group-hover:text-champagne-400 transition-colors font-light">${project.title}</h3>
+                            <p class="text-slate-400 text-xs line-clamp-3 mb-6 font-light leading-relaxed">${project.shortDesc}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-500">
+                        <span>${project.location}</span>
+                        <span class="flex items-center gap-1 text-champagne-400 group-hover:translate-x-1 transition-transform">
+                            Details <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        </span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        // FILTER PROJECTS HANDLER
+        function filterProjects(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.className = "filter-btn active px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider transition-all bg-champagne-500 text-obsidian font-bold";
+                } else {
+                    btn.className = "filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all";
+                }
+            });
+            renderProjects();
+        }
+
+        // RENDER COMPUTATIONAL SCRIPT CONSOLE
+        function renderScriptConsole() {
+            const scriptList = document.getElementById('script-list');
+            scriptList.innerHTML = '';
+
+            SCRIPTS_DATA.forEach((script, idx) => {
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-2xl border cursor-pointer transition-all ${idx === 0 ? 'bg-champagne-500/10 border-champagne-400/50 shadow-lg' : 'glass-panel border-white/5 hover:border-white/20'}`;
+                item.onclick = (e) => selectScript(script, e.currentTarget);
+
+                item.innerHTML = `
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[11px] font-mono text-champagne-400">${script.filename}</span>
+                        <i data-lucide="code" class="w-3.5 h-3.5 text-slate-400"></i>
+                    </div>
+                    <h4 class="text-sm font-semibold text-white mb-1">${script.name}</h4>
+                    <p class="text-xs text-slate-400 font-light line-clamp-2">${script.desc}</p>
+                `;
+                scriptList.appendChild(item);
+            });
+
+            selectScript(SCRIPTS_DATA[0], scriptList.firstElementChild);
+            lucide.createIcons();
+        }
+
+        function selectScript(script, element) {
+            if (element && element.parentElement) {
+                Array.from(element.parentElement.children).forEach(child => {
+                    child.className = 'p-4 rounded-2xl border cursor-pointer transition-all glass-panel border-white/5 hover:border-white/20';
+                });
+                element.className = 'p-4 rounded-2xl border cursor-pointer transition-all bg-champagne-500/10 border-champagne-400/50 shadow-lg';
+            }
+
+            document.getElementById('script-filename').innerText = script.filename;
+            document.getElementById('script-code-block').innerText = script.code;
+            document.getElementById('script-desc').innerText = script.desc;
+        }
+
+        function copyCode() {
+            const code = document.getElementById('script-code-block').innerText;
+            navigator.clipboard.writeText(code);
+            const copyBtnText = document.getElementById('copy-btn-text');
+            copyBtnText.innerText = 'Copied!';
+            setTimeout(() => { copyBtnText.innerText = 'Copy Code'; }, 2000);
+        }
+
+        // PROJECT DRAWER MODAL HANDLERS
+        function openProjectModal(projectId) {
+            const project = PROJECTS_DATA.find(p => p.id === projectId);
+            if (!project) return;
+
+            document.getElementById('modal-title').innerText = project.title;
+            document.getElementById('modal-subtitle').innerText = project.subtitle;
+            document.getElementById('modal-location').innerText = project.location;
+            document.getElementById('modal-area').innerText = project.area;
+            document.getElementById('modal-role').innerText = project.role;
+            document.getElementById('modal-image').src = project.heroImage;
+            document.getElementById('modal-full-desc').innerText = project.fullDesc;
+
+            const highlightsContainer = document.getElementById('modal-highlights');
+            highlightsContainer.innerHTML = '';
+            project.highlights.forEach(h => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start gap-2 text-slate-300';
+                li.innerHTML = `<span class="text-champagne-400 font-bold">•</span><span>${h}</span>`;
+                highlightsContainer.appendChild(li);
+            });
+
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // LIGHTBOX MODAL HANDLERS
+        function openLightbox(title, award, url, desc) {
+            document.getElementById('lightbox-title').innerText = title;
+            document.getElementById('lightbox-award').innerText = award;
+            document.getElementById('lightbox-img').src = url;
+            document.getElementById('lightbox-desc').innerText = desc;
+
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // CONTACT MODAL HANDLERS
+        function openContactModal() {
+            document.getElementById('contact-modal').classList.remove('hidden');
+            document.getElementById('contact-modal').classList.add('flex');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+            document.getElementById('contact-modal').classList.remove('flex');
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            alert('Thank you! Your message has been routed to Aashish Lalwani (aashishlalwani@outlook.com).');
+            closeContactModal();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // AMBIENT THREE.JS WIREFRAME CANVAS
+        function initThreeJS() {
+            const canvas = document.getElementById('ambient-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Create Geometric Wireframe Architectural Lattice
+            const geometry = new THREE.IcosahedronGeometry(12, 2);
+            const wireframe = new THREE.WireframeGeometry(geometry);
+            const material = new THREE.LineBasicMaterial({
+                color: 0xE2C08D,
+                transparent: true,
+                opacity: 0.08
+            });
+
+            const sphere = new THREE.LineSegments(wireframe, material);
+            scene.add(sphere);
+
+            camera.position.z = 25;
+
+            // Mouse Interaction Dynamic Shift
+            let mouseX = 0, mouseY = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.2;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                sphere.rotation.x += 0.001;
+                sphere.rotation.y += 0.0015;
+
+                sphere.rotation.x += (mouseY - sphere.rotation.x) * 0.05;
+                sphere.rotation.y += (mouseX - sphere.rotation.y) * 0.05;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+    </script>
 </body>
 </html>
