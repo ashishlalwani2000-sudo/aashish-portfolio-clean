@@ -1,883 +1,270 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aashish Lalwani | Architectural Masterpiece & Computational Exhibition</title>
+    <title>Aashish Lalwani | Architect & Computational Designer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        obsidian: '#040405',
-                        charcoal: '#0b0b0e',
-                        surface: '#121217',
-                        'surface-light': '#1a1a22',
-                        accent: {
-                            gold: '#dfb15b',
-                            bronze: '#b88e3e',
-                            cyan: '#38bdf8',
-                            emerald: '#34d399'
-                        }
-                    },
                     fontFamily: {
-                        serif: ['Cormorant Garamond', 'serif'],
+                        serif: ['Cinzel', 'serif'],
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace']
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        obsidian: '#050505',
+                        surface: '#0d0d0d',
+                        borderSubtle: '#1f1f1f',
+                        accentGold: '#d4af37',
                     }
                 }
             }
         }
     </script>
-    <style>
-        body {
-            background-color: #040405;
-            color: #f1f5f9;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-        }
-
-        .blueprint-grid {
-            background-size: 80px 80px;
-            background-image: 
-                linear-gradient(to right, rgba(223, 177, 91, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(223, 177, 91, 0.03) 1px, transparent 1px),
-                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-        }
-
-        .glass-card {
-            background: rgba(18, 18, 23, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(223, 177, 91, 0.12);
-        }
-
-        .glass-card-hover {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .glass-card-hover:hover {
-            background: rgba(26, 26, 34, 0.85);
-            border-color: rgba(223, 177, 91, 0.45);
-            transform: translateY(-6px) scale(1.005);
-            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9), 0 0 30px rgba(223, 177, 91, 0.15);
-        }
-
-        .gold-metallic-text {
-            background: linear-gradient(135deg, #FFFDF9 0%, #DFB15B 50%, #8C6621 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .cyan-metallic-text {
-            background: linear-gradient(135deg, #E0F2FE 0%, #38BDF8 50%, #0369A1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #040405; }
-        ::-webkit-scrollbar-thumb { background: #1e1e28; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #dfb15b; }
-
-        canvas#bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .scanline {
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.25) 51%);
-            background-size: 100% 4px;
-        }
-    </style>
 </head>
-<body class="blueprint-grid antialiased selection:bg-accent-gold/30 selection:text-accent-gold">
+<body class="bg-obsidian text-neutral-200 font-sans antialiased selection:bg-neutral-800 selection:text-white min-h-screen">
 
-    <canvas id="bg-canvas"></canvas>
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-obsidian/80 backdrop-blur-md border-b border-borderSubtle px-6 md:px-12 py-5 flex justify-between items-center">
+        <a href="#" class="font-serif tracking-widest text-lg font-bold text-white uppercase hover:text-accentGold transition">Aashish Lalwani</a>
+        <div class="hidden md:flex space-x-8 text-xs tracking-widest uppercase text-neutral-400 font-mono">
+            <a href="#work" class="hover:text-white transition">Projects</a>
+            <a href="#computational" class="hover:text-white transition">Computational</a>
+            <a href="#photography" class="hover:text-white transition">Photography</a>
+            <a href="#about" class="hover:text-white transition">About</a>
+        </div>
+        <a href="mailto:aashishlalwani@outlook.com" class="text-xs font-mono uppercase tracking-widest px-5 py-2 border border-neutral-700 hover:border-white hover:bg-white hover:text-black transition rounded-full">Contact</a>
+    </nav>
 
-    <header class="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-7xl">
-        <nav class="glass-card rounded-full px-6 py-4 flex items-center justify-between shadow-2xl border border-accent-gold/20">
-            <a href="#hero" class="flex items-center gap-3.5 group">
-                <span class="w-2.5 h-2.5 rounded-full bg-accent-gold animate-ping"></span>
-                <span class="font-serif text-xl tracking-widest text-white uppercase font-semibold">AASHISH LALWANI</span>
-                <span class="hidden lg:inline-block text-[10px] font-mono tracking-widest text-accent-gold/80 border-l border-white/10 pl-3">ARCHITECT & COMPUTATIONAL DESIGNER</span>
-            </a>
-
-            <!-- Desktop Links -->
-            <div class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-slate-300">
-                <a href="#projects" class="hover:text-accent-gold transition-colors">Exhibition</a>
-                <a href="#computational" class="hover:text-accent-gold transition-colors">Scripts & Automation</a>
-                <a href="#photography" class="hover:text-accent-gold transition-colors">HDR Awards</a>
-                <a href="#about" class="hover:text-accent-gold transition-colors">Profile</a>
+    <!-- HERO SECTION -->
+    <section class="min-h-screen pt-32 pb-20 px-6 md:px-12 flex flex-col justify-between max-w-7xl mx-auto border-b border-borderSubtle">
+        <div class="mt-12 space-y-6 max-w-4xl">
+            <div class="inline-flex items-center space-x-3 px-3 py-1 bg-neutral-900 border border-neutral-800 rounded-full text-xs font-mono text-neutral-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>HDR Dubai · Architectural & Computational Designer</span>
             </div>
-
-            <div class="flex items-center gap-3">
-                <button onclick="toggleUploaderModal()" class="hidden sm:flex items-center gap-2 bg-white/5 hover:bg-white/10 text-accent-gold border border-accent-gold/30 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all">
-                    <i data-lucide="image-plus" class="w-3.5 h-3.5"></i>
-                    <span>Swap Drawings</span>
-                </button>
-                <button onclick="openContactModal()" class="flex items-center gap-2 bg-gradient-to-r from-accent-gold to-accent-bronze text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-lg shadow-accent-gold/20">
-                    <span>Inquire</span>
-                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <main class="relative z-10">
-
-        <section id="hero" class="pt-40 md:pt-52 pb-24 px-6 max-w-7xl mx-auto flex flex-col justify-center min-h-screen">
-            <div class="flex flex-wrap items-center gap-3 mb-8">
-                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-accent-gold/10 border border-accent-gold/30 text-accent-gold text-xs font-mono uppercase tracking-widest">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>HDR Dubai | Practice Lead</span>
-                </div>
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-400 text-xs font-mono">
-                    <i data-lucide="map-pin" class="w-3 h-3 text-accent-gold"></i>
-                    <span>Dubai / Global Projects</span>
-                </div>
-            </div>
-
-            <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif tracking-tight leading-[0.95] mb-8 text-white font-light">
-                Architectural <span class="italic font-normal gold-metallic-text">Vision.</span><br>
-                Computational <span class="italic font-normal cyan-metallic-text">Rigor.</span>
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-light text-white tracking-tight leading-tight">
+                Sculpting Spatial Systems & Computational Architecture.
             </h1>
-
-            <p class="text-slate-300 text-lg md:text-2xl max-w-4xl leading-relaxed mb-12 font-light">
-                Architect & Computational Specialist at <strong class="text-white font-medium">HDR Dubai</strong>. Designing mega-scale healthcare infrastructure and parametric cityscapes including <span class="text-accent-gold">NEOM The Line</span>, <span class="text-accent-gold">UCSF Helen Diller Hospital</span>, and <span class="text-accent-gold">Sheikh Shakhbout Medical City</span>.
+            <p class="text-neutral-400 text-base md:text-lg max-w-2xl font-light leading-relaxed">
+                Specializing in large-scale healthcare BIM coordination, complex parametric facades, and automated workflow scripts for high-impact global projects.
             </p>
+        </div>
 
-            <!-- Ticker Status Banner -->
-            <div class="glass-card rounded-2xl p-4 mb-12 border-accent-gold/20 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs">
-                <div class="flex items-center gap-3 text-slate-400">
-                    <i data-lucide="activity" class="w-4 h-4 text-accent-cyan animate-pulse"></i>
-                    <span class="text-slate-500 uppercase tracking-wider">ACTIVE PIPELINE:</span>
-                    <span class="text-slate-200">NEOM The Line (KSA) • UCSF Hospital (USA) • SSMC (UAE) • Anahata</span>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-neutral-900 text-xs font-mono text-neutral-500">
+            <div>
+                <span class="block text-white font-bold text-sm mb-1">NEOM - The Line</span>
+                <span>Parametric Masterplanning</span>
+            </div>
+            <div>
+                <span class="block text-white font-bold text-sm mb-1">UCSF Diller Hospital</span>
+                <span>Healthcare BIM Coordination</span>
+            </div>
+            <div>
+                <span class="block text-white font-bold text-sm mb-1">SSMC Hospital</span>
+                <span>Technical Detailing</span>
+            </div>
+            <div>
+                <span class="block text-white font-bold text-sm mb-1">Anahata Thesis</span>
+                <span>Healing Architecture</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED PROJECTS SECTION -->
+    <section id="work" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="flex justify-between items-end mb-16">
+            <div>
+                <span class="text-xs font-mono uppercase tracking-widest text-neutral-500 block mb-2">Portfolio Showcase</span>
+                <h2 class="font-serif text-3xl md:text-5xl font-light text-white">Selected Masterworks</h2>
+            </div>
+            <span class="hidden md:block text-xs font-mono text-neutral-500">Click any project to expand blueprints & plans</span>
+        </div>
+
+        <div class="space-y-24">
+            <!-- PROJECT 1: NEOM -->
+            <div class="group cursor-pointer border border-borderSubtle bg-surface rounded-2xl overflow-hidden hover:border-neutral-600 transition duration-500" onclick="openModal('neom')">
+                <div class="relative h-[400px] md:h-[550px] bg-neutral-900 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" alt="NEOM The Line" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+                    <div class="absolute top-6 right-6 bg-obsidian/80 backdrop-blur-md px-4 py-2 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300">
+                        NEOM, KSA
+                    </div>
                 </div>
-                <div class="flex items-center gap-4 text-accent-gold font-bold uppercase tracking-wider">
-                    <span>PyRevit API</span>
-                    <span>•</span>
-                    <span>Rhino Grasshopper</span>
-                    <span>•</span>
-                    <span>BIM Automation</span>
+                <div class="p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                    <div class="space-y-3 max-w-2xl">
+                        <span class="text-xs font-mono text-accentGold uppercase tracking-widest">Mega Project · Parametric Design</span>
+                        <h3 class="font-serif text-2xl md:text-4xl text-white font-light">THE LINE — NEOM</h3>
+                        <p class="text-neutral-400 text-sm leading-relaxed">Advanced computational modeling, algorithmic facade rationalization, and massive BIM data coordination for the world's most revolutionary zero-gravity urban construct.</p>
+                    </div>
+                    <button class="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-white border-b border-white pb-1 group-hover:text-accentGold group-hover:border-accentGold transition">
+                        <span>View Plans & Drawings</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Stats Bar -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-white/10 pt-10">
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl md:text-5xl font-serif text-white gold-metallic-text font-bold">240,000+</div>
-                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-widest mt-2">SQ.M Healthcare Mastered</div>
+            <!-- PROJECT 2: UCSF -->
+            <div class="group cursor-pointer border border-borderSubtle bg-surface rounded-2xl overflow-hidden hover:border-neutral-600 transition duration-500" onclick="openModal('ucsf')">
+                <div class="relative h-[400px] md:h-[550px] bg-neutral-900 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80" alt="UCSF Health" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+                    <div class="absolute top-6 right-6 bg-obsidian/80 backdrop-blur-md px-4 py-2 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300">
+                        San Francisco, USA
+                    </div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl md:text-5xl font-serif text-white cyan-metallic-text font-bold">300+</div>
-                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-widest mt-2">BIM Hours Automated / Mo</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl md:text-5xl font-serif text-white gold-metallic-text font-bold">2x</div>
-                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-widest mt-2">HDR Global Photo Awards</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl md:text-5xl font-serif text-white font-bold text-slate-100">100%</div>
-                    <div class="text-[11px] font-mono text-slate-400 uppercase tracking-widest mt-2">Parametric & BIM Compliant</div>
+                <div class="p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                    <div class="space-y-3 max-w-2xl">
+                        <span class="text-xs font-mono text-accentGold uppercase tracking-widest">Healthcare Architecture · BIM</span>
+                        <h3 class="font-serif text-2xl md:text-4xl text-white font-light">UCSF Health Helen Diller Hospital</h3>
+                        <p class="text-neutral-400 text-sm leading-relaxed">High-complexity medical facility BIM documentation, clinical room renumbering automation, and multi-disciplinary clash detection workflows at HDR.</p>
+                    </div>
+                    <button class="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-white border-b border-white pb-1 group-hover:text-accentGold group-hover:border-accentGold transition">
+                        <span>View Plans & Drawings</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
                 </div>
             </div>
-        </section>
 
-        <section id="projects" class="py-28 px-6 max-w-7xl mx-auto border-t border-white/10">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <!-- PROJECT 3: SSMC -->
+            <div class="group cursor-pointer border border-borderSubtle bg-surface rounded-2xl overflow-hidden hover:border-neutral-600 transition duration-500" onclick="openModal('ssmc')">
+                <div class="relative h-[400px] md:h-[550px] bg-neutral-900 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1600&q=80" alt="SSMC" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+                    <div class="absolute top-6 right-6 bg-obsidian/80 backdrop-blur-md px-4 py-2 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300">
+                        Abu Dhabi, UAE
+                    </div>
+                </div>
+                <div class="p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                    <div class="space-y-3 max-w-2xl">
+                        <span class="text-xs font-mono text-accentGold uppercase tracking-widest">Institutional Healthcare</span>
+                        <h3 class="font-serif text-2xl md:text-4xl text-white font-light">Sheikh Shakhbout Medical City</h3>
+                        <p class="text-neutral-400 text-sm leading-relaxed">Comprehensive architectural wall section detailing, wayfinding integration, and Revizto issue management for one of the largest UAE medical complexes.</p>
+                    </div>
+                    <button class="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-white border-b border-white pb-1 group-hover:text-accentGold group-hover:border-accentGold transition">
+                        <span>View Plans & Drawings</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PROJECT 4: ANAHATA -->
+            <div class="group cursor-pointer border border-borderSubtle bg-surface rounded-2xl overflow-hidden hover:border-neutral-600 transition duration-500" onclick="openModal('anahata')">
+                <div class="relative h-[400px] md:h-[550px] bg-neutral-900 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80" alt="Anahata Thesis" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+                    <div class="absolute top-6 right-6 bg-obsidian/80 backdrop-blur-md px-4 py-2 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300">
+                        Academic Thesis
+                    </div>
+                </div>
+                <div class="p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                    <div class="space-y-3 max-w-2xl">
+                        <span class="text-xs font-mono text-accentGold uppercase tracking-widest">Architectural Thesis</span>
+                        <h3 class="font-serif text-2xl md:text-4xl text-white font-light">Anahata — Holistic Cancer Care Center</h3>
+                        <p class="text-neutral-400 text-sm leading-relaxed">Award-nominated architectural design exploring biophilic therapy, microclimate solar control, and spatial healing for oncology rehabilitation.</p>
+                    </div>
+                    <button class="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-white border-b border-white pb-1 group-hover:text-accentGold group-hover:border-accentGold transition">
+                        <span>View Plans & Drawings</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DRAWING LIGHTBOX MODAL -->
+    <div id="drawingModal" class="fixed inset-0 z-50 hidden bg-obsidian/95 backdrop-blur-xl p-6 md:p-12 overflow-y-auto">
+        <div class="max-w-6xl mx-auto space-y-8">
+            <div class="flex justify-between items-center border-b border-neutral-800 pb-6">
                 <div>
-                    <div class="text-xs font-mono uppercase tracking-widest text-accent-gold mb-2 flex items-center gap-2">
-                        <i data-lucide="compass" class="w-4 h-4"></i>
-                        <span>01 / ARCHITECTURAL EXHIBITION SHOWROOM</span>
-                    </div>
-                    <h2 class="text-4xl sm:text-6xl font-serif text-white font-light">Masterworks & Blueprint Gallery</h2>
+                    <span id="modalCategory" class="text-xs font-mono text-accentGold uppercase tracking-widest">Project Details</span>
+                    <h3 id="modalTitle" class="font-serif text-3xl text-white font-light mt-1">Project Name</h3>
                 </div>
-
-                <!-- Filter Pills -->
-                <div class="flex flex-wrap gap-2 bg-surface p-2 rounded-2xl border border-white/10">
-                    <button onclick="filterProjects('All')" class="filter-btn active px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider transition-all bg-accent-gold text-obsidian font-bold" data-filter="All">All Projects</button>
-                    <button onclick="filterProjects('Megaprojects')" class="filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all" data-filter="Megaprojects">Megaprojects</button>
-                    <button onclick="filterProjects('Healthcare')" class="filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all" data-filter="Healthcare">Healthcare BIM</button>
-                    <button onclick="filterProjects('Thesis')" class="filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all" data-filter="Thesis">Academic Thesis</button>
-                </div>
-            </div>
-
-            <!-- Interactive Project Cards Container -->
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Injected dynamically by JavaScript -->
-            </div>
-        </section>
-
-        <section id="computational" class="py-28 px-6 max-w-7xl mx-auto border-t border-white/10">
-            <div class="mb-14">
-                <div class="text-xs font-mono uppercase tracking-widest text-accent-cyan mb-2 flex items-center gap-2">
-                    <i data-lucide="terminal" class="w-4 h-4"></i>
-                    <span>02 / COMPUTATIONAL BIM & SCRIPTING CONSOLE</span>
-                </div>
-                <h2 class="text-4xl sm:text-6xl font-serif text-white font-light mb-4">pyRevit & Visual Logic Lab</h2>
-                <p class="text-slate-400 max-w-2xl text-sm leading-relaxed">
-                    Custom-built python automation routines, Revit API hooks, and Grasshopper visual algorithms engineered by Aashish Lalwani to accelerate mega-scale documentation.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-card rounded-3xl p-6 md:p-8 border-accent-gold/20">
-                <!-- Script List Selection -->
-                <div class="lg:col-span-4 flex flex-col gap-3" id="script-list">
-                    <!-- Script Selection Items Injected Here -->
-                </div>
-
-                <!-- Interactive IDE Console -->
-                <div class="lg:col-span-8 bg-obsidian rounded-2xl border border-white/10 p-6 flex flex-col justify-between font-mono text-xs shadow-2xl relative overflow-hidden">
-                    <div class="scanline absolute inset-0 pointer-events-none opacity-20"></div>
-                    
-                    <div>
-                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/10 relative z-10">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
-                                <span id="script-filename" class="ml-2 text-slate-300 text-xs">renumber_rooms.py</span>
-                            </div>
-
-                            <div class="flex items-center gap-3">
-                                <button onclick="runScriptSimulation()" class="flex items-center gap-2 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold hover:text-obsidian px-3 py-1.5 rounded-lg border border-accent-gold/40 transition-all font-bold">
-                                    <i data-lucide="play" class="w-3.5 h-3.5"></i>
-                                    <span>Execute Simulation</span>
-                                </button>
-                                <button onclick="copyCode()" class="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
-                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span id="copy-btn-text">Copy</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <pre class="text-emerald-400 overflow-x-auto leading-relaxed p-3 font-mono text-[11px] sm:text-xs max-h-[360px] relative z-10">
-                            <code id="script-code-block"># Initializing Python Environment...</code>
-                        </pre>
-                    </div>
-
-                    <!-- Terminal Output Box -->
-                    <div id="terminal-output" class="hidden mt-4 p-3 bg-slate-950 border border-emerald-500/30 rounded-xl text-[11px] font-mono text-emerald-300 relative z-10">
-                        <span class="text-slate-500">[SYSTEM]</span> Script executed successfully. 1,420 Room parameters updated in 0.42 seconds.
-                    </div>
-
-                    <div class="pt-4 mt-6 border-t border-white/10 text-slate-500 text-[11px] flex justify-between items-center relative z-10">
-                        <span id="script-desc" class="text-slate-400 italic">Sequential BIM room renumbering routine</span>
-                        <span class="text-accent-gold font-semibold font-mono">HDR Revit API Toolkit</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="photography" class="py-28 px-6 max-w-7xl mx-auto border-t border-white/10">
-            <div class="mb-14">
-                <div class="text-xs font-mono uppercase tracking-widest text-accent-gold mb-2 flex items-center gap-2">
-                    <i data-lucide="award" class="w-4 h-4"></i>
-                    <span>03 / SPATIAL LIGHT & PHOTOGRAPHY</span>
-                </div>
-                <h2 class="text-4xl sm:text-6xl font-serif text-white font-light mb-3">HDR Global Photo Contest Winners</h2>
-                <p class="text-slate-400 text-sm">International photography recognitions capturing structural geometries, concrete shadows, and spatial voids.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Award Photo 1 -->
-                <div onclick="openPhotoModal('Pocket-Sized Galaxies', '3rd Place Winner — 2025 HDR Global Photo Contest', 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80', 'Macro analysis of architectural joint detail, concrete light filtering, and spatial scaling.', 'F/2.8 • 1/500s • ISO 100 • 35mm')" class="group relative aspect-[16/10] rounded-3xl overflow-hidden cursor-pointer glass-card glass-card-hover border-accent-gold/20">
-                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Pocket-Sized Galaxies" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent p-8 flex flex-col justify-end">
-                        <div class="inline-flex items-center gap-2 text-accent-gold text-xs font-mono mb-2">
-                            <i data-lucide="award" class="w-4 h-4"></i>
-                            <span>3rd Place Winner — 2025 HDR Global Contest</span>
-                        </div>
-                        <h3 class="text-3xl font-serif text-white mb-2">Pocket-Sized Galaxies</h3>
-                        <p class="text-xs text-slate-300 font-light">Macro analysis of architectural joinery and concrete light shafts.</p>
-                    </div>
-                </div>
-
-                <!-- Award Photo 2 -->
-                <div onclick="openPhotoModal('Void & Zenith', '2nd Place Winner — 2026 HDR Global Photo Contest', 'https://images.unsplash.com/photo-1506158669146-619067262a00?auto=format&fit=crop&w=1600&q=80', 'Monochrome study of atrium skylights and cantilevered shadow lines.', 'F/4.0 • 1/1000s • ISO 200 • 24mm')" class="group relative aspect-[16/10] rounded-3xl overflow-hidden cursor-pointer glass-card glass-card-hover border-accent-gold/20">
-                    <img src="https://images.unsplash.com/photo-1506158669146-619067262a00?auto=format&fit=crop&w=1200&q=80" alt="Void & Zenith" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent p-8 flex flex-col justify-end">
-                        <div class="inline-flex items-center gap-2 text-accent-gold text-xs font-mono mb-2">
-                            <i data-lucide="award" class="w-4 h-4"></i>
-                            <span>2nd Place Winner — 2026 HDR Global Contest</span>
-                        </div>
-                        <h3 class="text-3xl font-serif text-white mb-2">Void & Zenith</h3>
-                        <p class="text-xs text-slate-300 font-light">Monochrome study of atrium skylights and cantilevered shadow lines.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="py-28 px-6 max-w-7xl mx-auto border-t border-white/10">
-            <div class="glass-card rounded-3xl p-8 md:p-16 border-accent-gold/30 flex flex-col lg:flex-row gap-12 items-start justify-between">
-                <div class="max-w-2xl">
-                    <span class="text-xs font-mono uppercase tracking-widest text-accent-gold mb-3 block">Architectural Profile</span>
-                    <h3 class="text-4xl sm:text-5xl font-serif text-white mb-6 font-light">Aashish Lalwani</h3>
-                    <p class="text-slate-300 text-base leading-relaxed mb-6 font-light">
-                        Architect and Computational Specialist leading BIM coordination, generative spatial optimization, and automated workflow scripts at <strong class="text-white font-medium">HDR Dubai</strong>. Experienced across mega-scale healthcare infrastructure and parametric developments in the Middle East and the United States.
-                    </p>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-8 font-light">
-                        Combining computational design with biophilic human-centric architecture, bridging early conceptual geometry with production-ready Revit models and execution drawings.
-                    </p>
-
-                    <div class="flex flex-wrap gap-4">
-                        <button onclick="openContactModal()" class="bg-gradient-to-r from-accent-gold to-accent-bronze text-obsidian px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-xl">
-                            Initiate Inquiry
-                        </button>
-                        <a href="mailto:aashishlalwani@outlook.com" class="glass-card text-white px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all border border-white/20 flex items-center gap-2">
-                            <i data-lucide="mail" class="w-4 h-4 text-accent-gold"></i>
-                            <span>aashishlalwani@outlook.com</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Specs Box -->
-                <div class="w-full lg:w-96 glass-card p-6 rounded-2xl border border-white/10 flex flex-col gap-4 text-xs font-mono">
-                    <div class="flex justify-between pb-3 border-b border-white/10">
-                        <span class="text-slate-500">Practice</span>
-                        <span class="text-white font-bold">HDR Dubai</span>
-                    </div>
-                    <div class="flex justify-between pb-3 border-b border-white/10">
-                        <span class="text-slate-500">Location</span>
-                        <span class="text-white">Dubai, United Arab Emirates</span>
-                    </div>
-                    <div class="flex justify-between pb-3 border-b border-white/10">
-                        <span class="text-slate-500">Specialization</span>
-                        <span class="text-accent-gold text-right">Healthcare, BIM, pyRevit Scripts</span>
-                    </div>
-                    <div class="flex justify-between pb-3 border-b border-white/10">
-                        <span class="text-slate-500">Core Software</span>
-                        <span class="text-slate-300 text-right">Revit, Dynamo, Grasshopper, Python</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">Key Megaproject</span>
-                        <span class="text-accent-cyan">NEOM | THE LINE</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="py-12 px-6 border-t border-white/10 text-center text-xs font-mono text-slate-500">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-                <p>© 2026 Aashish Lalwani. Architect & Computational Specialist — HDR Dubai.</p>
-                <div class="flex gap-6 text-slate-400">
-                    <a href="mailto:aashishlalwani@outlook.com" class="hover:text-accent-gold transition-colors">Outlook</a>
-                    <a href="https://linkedin.com" target="_blank" class="hover:text-accent-gold transition-colors">LinkedIn</a>
-                    <a href="#hero" class="hover:text-accent-gold transition-colors">Back To Top ↑</a>
-                </div>
-            </div>
-        </footer>
-
-    </main>
-
-    <div id="drawing-modal" class="fixed inset-0 z-50 bg-obsidian/95 backdrop-blur-2xl hidden flex justify-center items-center p-4 sm:p-8">
-        <div class="w-full max-w-6xl bg-charcoal h-[92vh] rounded-3xl border border-accent-gold/30 flex flex-col justify-between shadow-2xl overflow-hidden relative">
-            
-            <!-- Modal Header with Tab Selector -->
-            <div class="p-6 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface">
-                <div>
-                    <span id="modal-project-category" class="text-[10px] font-mono text-accent-gold uppercase tracking-widest">Healthcare BIM</span>
-                    <h3 id="modal-project-title" class="text-2xl sm:text-3xl font-serif text-white font-light">Project Title</h3>
-                </div>
-
-                <!-- Drawing Type Tabs -->
-                <div class="flex gap-2 bg-obsidian p-1.5 rounded-xl border border-white/10 text-xs font-mono">
-                    <button onclick="switchDrawingTab('render')" id="tab-render" class="px-4 py-2 rounded-lg bg-accent-gold text-obsidian font-bold">3D Renders</button>
-                    <button onclick="switchDrawingTab('cad')" id="tab-cad" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white">CAD & BIM Plans</button>
-                    <button onclick="switchDrawingTab('logic')" id="tab-logic" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white">Computational Logic</button>
-                </div>
-
-                <button onclick="closeDrawingModal()" class="p-2 rounded-full glass-card text-slate-300 hover:text-white">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+                <button onclick="closeModal()" class="p-3 bg-neutral-900 hover:bg-neutral-800 rounded-full text-white border border-neutral-700 transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
 
-            <!-- Drawing View Area -->
-            <div class="flex-1 bg-obsidian relative overflow-hidden flex items-center justify-center p-6">
-                <img id="modal-drawing-img" src="" alt="Drawing View" class="max-h-full max-w-full object-contain rounded-xl border border-white/10 shadow-2xl">
+            <div class="space-y-6">
+                <p id="modalDesc" class="text-neutral-300 text-sm leading-relaxed max-w-3xl"></p>
                 
-                <div class="absolute bottom-6 left-6 right-6 glass-card p-4 rounded-xl text-xs font-mono text-slate-300 flex justify-between items-center border border-white/10">
-                    <span id="modal-view-caption" class="text-slate-200">View Caption</span>
-                    <span class="text-accent-gold">High-Res Drawing Viewport</span>
+                <div class="border border-neutral-800 bg-neutral-950 rounded-xl p-4 md:p-8 space-y-6">
+                    <h4 class="text-xs font-mono uppercase tracking-widest text-neutral-400">Architectural Drawings & Blueprint Schematics</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <div class="h-64 bg-neutral-900 rounded-lg overflow-hidden border border-neutral-800">
+                                <img id="modalImg1" src="" class="w-full h-full object-cover">
+                            </div>
+                            <span class="text-xs font-mono text-neutral-500">Floor Plan / Master Layout</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="h-64 bg-neutral-900 rounded-lg overflow-hidden border border-neutral-800">
+                                <img id="modalImg2" src="" class="w-full h-full object-cover">
+                            </div>
+                            <span class="text-xs font-mono text-neutral-500">BIM Elevation / Computational Axon</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Modal Footer Metadata -->
-            <div class="p-6 bg-surface border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-mono">
-                <p id="modal-project-desc" class="text-slate-400 max-w-3xl">Project description...</p>
-                <button onclick="closeDrawingModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl uppercase tracking-wider font-bold">
-                    Close Viewport
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="uploader-modal" class="fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md hidden items-center justify-center p-6">
-        <div class="glass-card border border-accent-gold/40 rounded-3xl p-8 max-w-2xl w-full relative shadow-2xl">
-            <button onclick="toggleUploaderModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-
-            <div class="flex items-center gap-3 mb-4 text-accent-gold">
-                <i data-lucide="folder-up" class="w-6 h-6"></i>
-                <h3 class="text-2xl font-serif text-white">How to Add Your Exact Drawings & Plans</h3>
-            </div>
-
-            <p class="text-slate-300 text-xs font-mono leading-relaxed mb-6">
-                You can easily display your exact architectural floor plans, CAD elevations, and renderings by dropping your image files directly into your GitHub repository!
-            </p>
-
-            <div class="space-y-4 font-mono text-xs bg-obsidian/80 p-5 rounded-2xl border border-white/10 mb-6">
-                <div class="flex gap-3 items-start">
-                    <span class="px-2 py-0.5 rounded bg-accent-gold text-obsidian font-bold">STEP 1</span>
-                    <span class="text-slate-300">In GitHub (<code class="text-accent-gold">aashish-portfolio-clean</code>), click <strong>Add File</strong> → <strong>Upload Files</strong>.</span>
-                </div>
-                <div class="flex gap-3 items-start">
-                    <span class="px-2 py-0.5 rounded bg-accent-gold text-obsidian font-bold">STEP 2</span>
-                    <span class="text-slate-300">Upload your images (e.g. <code class="text-emerald-400">ssmc-plan.png</code>, <code class="text-emerald-400">ucsf-axon.jpg</code>, <code class="text-emerald-400">neom-section.png</code>).</span>
-                </div>
-                <div class="flex gap-3 items-start">
-                    <span class="px-2 py-0.5 rounded bg-accent-gold text-obsidian font-bold">STEP 3</span>
-                    <span class="text-slate-300">Edit <code class="text-accent-gold">index.html</code> and replace placeholder links with <code class="text-emerald-400">/ssmc-plan.png</code>. Vercel will render them live instantly!</span>
-                </div>
-            </div>
-
-            <button onclick="toggleUploaderModal()" class="w-full py-3 bg-gradient-to-r from-accent-gold to-accent-bronze text-obsidian font-bold text-xs uppercase tracking-wider rounded-xl">
-                Got It, Ready to Upload
-            </button>
-        </div>
-    </div>
-
-    <!-- Photo Modal -->
-    <div id="photo-modal" onclick="closePhotoModal()" class="fixed inset-0 z-50 bg-obsidian/95 backdrop-blur-2xl hidden items-center justify-center p-6 cursor-pointer">
-        <div class="max-w-5xl flex flex-col items-center">
-            <img id="photo-modal-img" src="" alt="Enlarged Photo" class="max-h-[75vh] object-contain rounded-2xl border border-accent-gold/30 mb-6 shadow-2xl">
-            <div class="text-center max-w-xl">
-                <h3 id="photo-modal-title" class="text-3xl font-serif text-white mb-1">Title</h3>
-                <p id="photo-modal-award" class="text-xs font-mono text-accent-gold mb-2">Award</p>
-                <p id="photo-modal-exif" class="text-xs font-mono text-slate-500 mb-2">EXIF</p>
-                <p id="photo-modal-desc" class="text-xs text-slate-300 font-light">Description</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contact Modal -->
-    <div id="contact-modal" class="fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md hidden items-center justify-center p-6">
-        <div class="glass-card border border-accent-gold/40 rounded-3xl p-8 max-w-md w-full relative shadow-2xl">
-            <button onclick="closeContactModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-
-            <h3 class="text-3xl font-serif text-white mb-2 font-light">Direct Inquiries</h3>
-            <p class="text-xs text-slate-400 mb-6 font-mono">Aashish Lalwani — Architect & Computational Specialist at HDR Dubai.</p>
-
-            <form onsubmit="handleContactSubmit(event)" class="space-y-4 text-xs font-mono mb-6">
-                <div>
-                    <label class="block text-slate-400 mb-1">NAME</label>
-                    <input type="text" required placeholder="Architect / Design Principal" class="w-full bg-obsidian/80 border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-accent-gold">
-                </div>
-                <div>
-                    <label class="block text-slate-400 mb-1">EMAIL ADDRESS</label>
-                    <input type="email" required placeholder="name@firm.com" class="w-full bg-obsidian/80 border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-accent-gold">
-                </div>
-                <div>
-                    <label class="block text-slate-400 mb-1">BRIEF</label>
-                    <textarea rows="3" required placeholder="Project collaboration or computational BIM inquiry..." class="w-full bg-obsidian/80 border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-accent-gold"></textarea>
-                </div>
-                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-accent-gold to-accent-bronze text-obsidian font-bold text-xs uppercase tracking-wider rounded-xl hover:brightness-110 shadow-lg">
-                    Send Direct Message
-                </button>
-            </form>
-
-            <div class="pt-4 border-t border-white/10 text-center text-xs font-mono text-slate-400">
-                Direct Email: <a href="mailto:aashishlalwani@outlook.com" class="text-accent-gold hover:underline">aashishlalwani@outlook.com</a>
             </div>
         </div>
     </div>
 
     <script>
-        // MASTER EXHIBITION DATA
-        const PROJECTS = [
-            {
-                id: 'neom-line',
-                title: 'THE LINE | NEOM',
-                subtitle: 'HDR Dubai (2024–Present)',
-                category: 'Megaprojects',
-                tag: 'Megaprojects',
-                location: 'NEOM, KSA',
-                area: '170km Urban Corridor',
-                desc: 'Linear urbanism in KSA. High-density algorithmic facade rationalization and parametric massing matrices.',
-                renders: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
-                cad: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-                logic: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80',
-                renderCaption: '3D Solar Aperture Facade Rationalization Model',
-                cadCaption: 'Parametric Modular Core Section Drawing',
-                logicCaption: 'Grasshopper Solar Radiation Graph Matrix'
+        lucide.createIcons();
+
+        const projectData = {
+            neom: {
+                title: "THE LINE — NEOM",
+                category: "Mega Project · Parametric Design",
+                desc: "Computational masterplan layouts, continuous facade scripts, and high-density vertical urban planning matrices.",
+                img1: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+                img2: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80"
             },
-            {
-                id: 'ucsf-hdh',
-                title: 'UCSF Helen Diller Hospital',
-                subtitle: 'HDR San Francisco / Dubai',
-                category: 'Healthcare',
-                tag: 'Healthcare',
-                location: 'San Francisco, USA',
-                area: '82,000 sq.m',
-                desc: 'Tertiary healthcare tower. Medical equipment clearance automation and complex MEP/Surgical suite clash mitigation.',
-                renders: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80',
-                cad: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80',
-                logic: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80',
-                renderCaption: 'Main Atrium Architectural Massing Render',
-                cadCaption: 'Level 04 Surgical Suite FFE Equipment Clearance Plan',
-                logicCaption: 'pyRevit FFE Automated Spatial Alignment Diagram'
+            ucsf: {
+                title: "UCSF Health Helen Diller Hospital",
+                category: "Healthcare Architecture · BIM",
+                desc: "Complex medical equipment clearances, room renumbering automated pyRevit scripts, and multi-disciplinary clash resolution.",
+                img1: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
+                img2: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80"
             },
-            {
-                id: 'ssmc',
-                title: 'Sheikh Shakhbout Medical City',
-                subtitle: 'HDR Abu Dhabi',
-                category: 'Healthcare',
-                tag: 'Healthcare',
-                location: 'Abu Dhabi, UAE',
-                area: '240,000 sq.m',
-                desc: 'Abu Dhabi flagship hospital. Topological room renumbering automation and medical package execution.',
-                renders: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80',
-                cad: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-                logic: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80',
-                renderCaption: 'SSMC Main Healthcare Entrance Render',
-                cadCaption: 'Clinical Department Wall Section & Detailed Floor Plan',
-                logicCaption: 'Spline-Based Topological Space Renumbering Script'
+            ssmc: {
+                title: "Sheikh Shakhbout Medical City",
+                category: "Institutional Healthcare",
+                desc: "Detailed wall sections, interior clinical detailing, facade panel documentation, and Revizto markups.",
+                img1: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80",
+                img2: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
             },
-            {
-                id: 'anahata',
-                title: 'Anahata — Healing Architecture',
-                subtitle: 'Academic Thesis Masterwork',
-                category: 'Thesis',
-                tag: 'Thesis',
-                location: 'Porbandar, India',
-                area: '50,000 sq.m',
-                desc: 'Biophilic palliative cancer care hospital featuring passive microclimatic courtyard cooling and wave-like timber vaults.',
-                renders: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-                cad: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80',
-                logic: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
-                renderCaption: 'Palliative Garden & Timber Roof Vault Render',
-                cadCaption: 'Master Site Analysis & Solar Shading Access Drawing',
-                logicCaption: 'Fluid Dynamics Thermal Comfort Microclimate Simulation'
+            anahata: {
+                title: "Anahata — Holistic Cancer Care Center",
+                category: "Architectural Thesis",
+                desc: "Solar microclimate radiation studies, spatial circulation diagrams, biophilic courtyards, and detailed structural sections.",
+                img1: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+                img2: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
             }
-        ];
+        };
 
-        // SCRIPT LAB DATA
-        const SCRIPTS = [
-            {
-                id: 'renumber',
-                name: 'pyRevit Topological Space Renumberer',
-                filename: 'renumber_topological.py',
-                desc: 'Automates sequential spatial renumbering along spline paths across multi-level medical facilities.',
-                code: `import clr
-clr.AddReference('RevitAPI')
-from Autodesk.Revit.DB import *
-
-doc = __revit__.ActiveUIDocument.Document
-rooms = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).ToElements()
-
-# Sort rooms topologically along circulation vector
-sorted_rooms = sorted(rooms, key=lambda r: (r.Level.Elevation, r.Location.Point.X))
-
-with Transaction(doc, "Batch Renumber Spaces"):
-    for idx, room in enumerate(sorted_rooms):
-        new_num = "HC-{:03d}".format(idx + 101)
-        param = room.get_Parameter(BuiltInParameter.ROOM_NUMBER)
-        if param and not param.IsReadOnly:
-            param.Set(new_num)
-
-print("Renumbered {} spaces successfully.".format(len(rooms)))`
-            },
-            {
-                id: 'tag_aligner',
-                name: 'Medical Equipment Tag Auto-Aligner',
-                filename: 'align_medical_tags.py',
-                desc: 'Snaps medical equipment tags to orthogonal grid offsets across dense surgical layout drawings.',
-                code: `import clr
-clr.AddReference('RevitAPI')
-from Autodesk.Revit.DB import *
-
-doc = __revit__.ActiveUIDocument.Document
-tags = FilteredElementCollector(doc, doc.ActiveView.Id)\\
-    .OfCategory(BuiltInCategory.OST_MedicalEquipmentTags).ToElements()
-
-with Transaction(doc, "Align Medical Tags"):
-    for tag in tags:
-        head_pos = tag.TagHeadPosition
-        snapped_x = round(head_pos.X * 10) / 10
-        tag.TagHeadPosition = XYZ(snapped_x, head_pos.Y, head_pos.Z)`
-            }
-        ];
-
-        let currentFilter = 'All';
-        let activeProject = null;
-
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            initThreeJSBg();
-            renderProjects();
-            renderScriptConsole();
-        });
-
-        function renderProjects() {
-            const grid = document.getElementById('projects-grid');
-            grid.innerHTML = '';
-
-            const filtered = currentFilter === 'All' 
-                ? PROJECTS 
-                : PROJECTS.filter(p => p.tag === currentFilter);
-
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'group glass-card glass-card-hover rounded-3xl overflow-hidden cursor-pointer flex flex-col justify-between border-accent-gold/20';
-                card.onclick = () => openDrawingModal(p.id);
-
-                card.innerHTML = `
-                    <div>
-                        <div class="relative aspect-[16/10] overflow-hidden bg-obsidian">
-                            <img src="${p.renders}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-85 group-hover:opacity-100">
-                            <div class="absolute top-4 right-4 bg-obsidian/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest text-accent-gold border border-accent-gold/30">
-                                ${p.category}
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="text-xs text-accent-gold font-mono mb-1">${p.subtitle}</div>
-                            <h3 class="text-2xl font-serif text-white mb-2 group-hover:text-accent-gold transition-colors font-light">${p.title}</h3>
-                            <p class="text-slate-400 text-xs line-clamp-3 font-light leading-relaxed mb-4">${p.desc}</p>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-400">
-                        <span>${p.location}</span>
-                        <span class="flex items-center gap-1 text-accent-gold group-hover:translate-x-1 transition-transform">
-                            View Plans & Blueprints <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </span>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-
-            lucide.createIcons();
-        }
-
-        function filterProjects(cat) {
-            currentFilter = cat;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.getAttribute('data-filter') === cat) {
-                    btn.className = "filter-btn active px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider transition-all bg-accent-gold text-obsidian font-bold";
-                } else {
-                    btn.className = "filter-btn px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider text-slate-400 hover:text-white transition-all";
-                }
-            });
-            renderProjects();
-        }
-
-        function openDrawingModal(projectId) {
-            activeProject = PROJECTS.find(p => p.id === projectId);
-            if (!activeProject) return;
-
-            document.getElementById('modal-project-title').innerText = activeProject.title;
-            document.getElementById('modal-project-category').innerText = activeProject.category + " • " + activeProject.location;
-            document.getElementById('modal-project-desc').innerText = activeProject.desc;
-
-            switchDrawingTab('render');
-
-            const modal = document.getElementById('drawing-modal');
-            modal.classList.remove('hidden');
+        function openModal(key) {
+            const data = projectData[key];
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalCategory').innerText = data.category;
+            document.getElementById('modalDesc').innerText = data.desc;
+            document.getElementById('modalImg1').src = data.img1;
+            document.getElementById('modalImg2').src = data.img2;
+            document.getElementById('drawingModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
-        function switchDrawingTab(type) {
-            if (!activeProject) return;
-
-            const img = document.getElementById('modal-drawing-img');
-            const caption = document.getElementById('modal-view-caption');
-
-            ['render', 'cad', 'logic'].forEach(t => {
-                const btn = document.getElementById(`tab-${t}`);
-                if (t === type) {
-                    btn.className = "px-4 py-2 rounded-lg bg-accent-gold text-obsidian font-bold";
-                } else {
-                    btn.className = "px-4 py-2 rounded-lg text-slate-400 hover:text-white";
-                }
-            });
-
-            if (type === 'render') {
-                img.src = activeProject.renders;
-                caption.innerText = activeProject.renderCaption;
-            } else if (type === 'cad') {
-                img.src = activeProject.cad;
-                caption.innerText = activeProject.cadCaption;
-            } else {
-                img.src = activeProject.logic;
-                caption.innerText = activeProject.logicCaption;
-            }
-        }
-
-        function closeDrawingModal() {
-            document.getElementById('drawing-modal').classList.add('hidden');
+        function closeModal() {
+            document.getElementById('drawingModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
-        }
-
-        function renderScriptConsole() {
-            const list = document.getElementById('script-list');
-            list.innerHTML = '';
-
-            SCRIPTS.forEach((s, idx) => {
-                const item = document.createElement('div');
-                item.className = `p-4 rounded-2xl border cursor-pointer transition-all ${idx === 0 ? 'bg-accent-gold/10 border-accent-gold/50 shadow-lg' : 'glass-card border-white/5 hover:border-white/20'}`;
-                item.onclick = (e) => selectScript(s, e.currentTarget);
-
-                item.innerHTML = `
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="text-[11px] font-mono text-accent-gold">${s.filename}</span>
-                        <i data-lucide="code" class="w-3.5 h-3.5 text-slate-400"></i>
-                    </div>
-                    <h4 class="text-sm font-semibold text-white mb-1">${s.name}</h4>
-                    <p class="text-xs text-slate-400 font-light line-clamp-2">${s.desc}</p>
-                `;
-                list.appendChild(item);
-            });
-
-            selectScript(SCRIPTS[0], list.firstElementChild);
-            lucide.createIcons();
-        }
-
-        function selectScript(s, element) {
-            if (element && element.parentElement) {
-                Array.from(element.parentElement.children).forEach(c => {
-                    c.className = 'p-4 rounded-2xl border cursor-pointer transition-all glass-card border-white/5 hover:border-white/20';
-                });
-                element.className = 'p-4 rounded-2xl border cursor-pointer transition-all bg-accent-gold/10 border-accent-gold/50 shadow-lg';
-            }
-
-            document.getElementById('script-filename').innerText = s.filename;
-            document.getElementById('script-code-block').innerText = s.code;
-            document.getElementById('script-desc').innerText = s.desc;
-        }
-
-        function runScriptSimulation() {
-            const out = document.getElementById('terminal-output');
-            out.classList.remove('hidden');
-            out.innerHTML = '<span class="text-accent-gold animate-pulse">[PROCESSING]</span> Running pyRevit API script simulation on active view...';
-            setTimeout(() => {
-                out.innerHTML = '<span class="text-emerald-400">[SUCCESS]</span> Script executed successfully! 1,420 BIM elements verified and renumbered in 0.38s.';
-            }, 1200);
-        }
-
-        function copyCode() {
-            const code = document.getElementById('script-code-block').innerText;
-            navigator.clipboard.writeText(code);
-            document.getElementById('copy-btn-text').innerText = 'Copied!';
-            setTimeout(() => { document.getElementById('copy-btn-text').innerText = 'Copy'; }, 2000);
-        }
-
-        function toggleUploaderModal() {
-            const modal = document.getElementById('uploader-modal');
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
-        }
-
-        function openPhotoModal(title, award, url, desc, exif) {
-            document.getElementById('photo-modal-title').innerText = title;
-            document.getElementById('photo-modal-award').innerText = award;
-            document.getElementById('photo-modal-img').src = url;
-            document.getElementById('photo-modal-desc').innerText = desc;
-            document.getElementById('photo-modal-exif').innerText = exif;
-
-            const modal = document.getElementById('photo-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePhotoModal() {
-            const modal = document.getElementById('photo-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openContactModal() {
-            document.getElementById('contact-modal').classList.remove('hidden');
-            document.getElementById('contact-modal').classList.add('flex');
-        }
-
-        function closeContactModal() {
-            document.getElementById('contact-modal').classList.add('hidden');
-            document.getElementById('contact-modal').classList.remove('flex');
-        }
-
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            alert('Message routed directly to aashishlalwani@outlook.com.');
-            closeContactModal();
-        }
-
-        // THREE.JS PARAMETRIC POINT-CLOUD WIREFRAME
-        function initThreeJSBg() {
-            const canvas = document.getElementById('bg-canvas');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
-            const wireframe = new THREE.WireframeGeometry(geometry);
-            const material = new THREE.LineBasicMaterial({
-                color: 0xDFB15B,
-                transparent: true,
-                opacity: 0.07
-            });
-
-            const mesh = new THREE.LineSegments(wireframe, material);
-            scene.add(mesh);
-
-            camera.position.z = 24;
-
-            let mouseX = 0, mouseY = 0;
-            window.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.3;
-                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.3;
-            });
-
-            function animate() {
-                requestAnimationFrame(animate);
-                mesh.rotation.x += 0.001;
-                mesh.rotation.y += 0.0012;
-
-                mesh.rotation.x += (mouseY - mesh.rotation.x) * 0.05;
-                mesh.rotation.y += (mouseX - mesh.rotation.y) * 0.05;
-
-                renderer.render(scene, camera);
-            }
-
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
         }
     </script>
 </body>
